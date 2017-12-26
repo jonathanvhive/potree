@@ -1,5 +1,5 @@
-
-
+;(function(window, document, $, undefined) {
+"use strict";
 
 function Potree(){
 
@@ -19956,3 +19956,4 @@ Potree.GLProgram = class GLProgram{
 	}
 	
 };
+}(window, document, jQuery));

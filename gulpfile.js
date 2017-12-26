@@ -12,6 +12,7 @@ const jshint = require('gulp-jshint');
 const os = require('os');
 const File = gutil.File;
 const connect = require('gulp-connect');
+const iife = require('gulp-iife');
 
 var server;
 
@@ -147,6 +148,10 @@ gulp.task("scripts", ['workers','shaders'], function(){
 	gulp.src(paths.potree)
 		.pipe(concat('potree.js'))
 		.pipe(size({showFiles: true}))
+		.pipe(iife({
+            params: ["window", "document", "$", "undefined"],
+            args: ["window", "document", "jQuery"]
+		}))
 		.pipe(gulp.dest('build/potree'));
 
 	gulp.src(paths.laslaz)
