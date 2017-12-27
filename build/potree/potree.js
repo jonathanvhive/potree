@@ -10196,7 +10196,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		this.areaLabel.setTextColor({r:180, g:220, b:180, a:1.0});
 		this.areaLabel.material.depthTest = false;
 		this.areaLabel.material.opacity = 1;
-		this.areaLabel.visible = false;;
+		this.areaLabel.visible = false;
 		this.add(this.areaLabel);
 		
 		
@@ -10204,8 +10204,9 @@ Potree.Measure = class Measure extends THREE.Object3D{
 	
 	createSphereMaterial(){
 		let sphereMaterial = new THREE.MeshLambertMaterial({
-			shading: THREE.SmoothShading, 
-			color: this.color, 
+			// shading: THREE.SmoothShading,
+            flatShading: true,
+            color: this.color,
 			depthTest: false, 
 			depthWrite: false}
 		);
@@ -10936,8 +10937,9 @@ Potree.Profile = class extends THREE.Object3D{
 	
 	createSphereMaterial(){
 		let sphereMaterial = new THREE.MeshLambertMaterial({
-			shading: THREE.SmoothShading, 
-			color: 0xff0000, 
+			//shading: THREE.SmoothShading,
+			flatShading: true,
+			color: 0xff0000,
 			depthTest: false, 
 			depthWrite: false}
 		);
@@ -17116,8 +17118,6 @@ Potree.MapView = class{
 
 		let url = pointcloud.pcoGeometry.url + "/../sources.json";
 
-		console.log ('ergwerg');
-
 		fetch(url , {
 			method: 'GET',
             mode: 'cors',
@@ -17169,11 +17169,9 @@ Potree.MapView = class{
                 feature.setStyle(this.createLabelStyle(name));
                 this.sourcesLabelLayer.getSource().addFeature(feature);
             }
-
 		});
 
 	}
-
 	
 	toggle(){
 		
@@ -17237,8 +17235,6 @@ Potree.MapView = class{
 	}
 	
 };
-
-
 
 
 

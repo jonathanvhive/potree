@@ -22,8 +22,9 @@ Potree.Profile = class extends THREE.Object3D{
 	
 	createSphereMaterial(){
 		let sphereMaterial = new THREE.MeshLambertMaterial({
-			shading: THREE.SmoothShading, 
-			color: 0xff0000, 
+			//shading: THREE.SmoothShading,
+			flatShading: true,
+			color: 0xff0000,
 			depthTest: false, 
 			depthWrite: false}
 		);

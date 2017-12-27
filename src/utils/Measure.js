@@ -67,7 +67,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		this.areaLabel.setTextColor({r:180, g:220, b:180, a:1.0});
 		this.areaLabel.material.depthTest = false;
 		this.areaLabel.material.opacity = 1;
-		this.areaLabel.visible = false;;
+		this.areaLabel.visible = false;
 		this.add(this.areaLabel);
 		
 		
@@ -75,8 +75,9 @@ Potree.Measure = class Measure extends THREE.Object3D{
 	
 	createSphereMaterial(){
 		let sphereMaterial = new THREE.MeshLambertMaterial({
-			shading: THREE.SmoothShading, 
-			color: this.color, 
+			// shading: THREE.SmoothShading,
+            flatShading: true,
+            color: this.color,
 			depthTest: false, 
 			depthWrite: false}
 		);
