@@ -1,9 +1,12 @@
 
 
 
-function Potree(){
+window.Potree = function(){
 
-}
+};
+
+Potree = window.Potree;
+
 Potree.version = {
 	major: 1,
 	minor: 5,
