@@ -1184,7 +1184,7 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 			this.mapView = new Potree.MapView(this);
 			this.mapView.init();
 
-			/*
+
 			i18n.init({
 				lng: 'en',
 				resGetPath: Potree.resourcePath + '/lang/__lng__/__ns__.json',
@@ -1195,7 +1195,7 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 				// Start translation once everything is loaded
 				$("body").i18n();
 			});
-			*/
+
 			
 			$(function() {
 				initSidebar();
@@ -1228,8 +1228,8 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 	}
     
     setLanguage(lang){
-        // i18n.setLng(lang);
-        // $("body").i18n();
+         i18n.setLng(lang);
+         $("body").i18n();
     }
 	
 	setServer(server){

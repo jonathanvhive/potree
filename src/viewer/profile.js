@@ -366,38 +366,35 @@ Potree.ProfileWindow = class ProfileWindow extends THREE.EventDispatcher{
 		
 		this.svg.selectAll("*").remove();
 		
-		this.scaleX = d3.scale.linear()
+		this.scaleX = d3.scaleLinear()
 			.domain([this.camera.left + this.camera.position.x, this.camera.right + this.camera.position.x])
 			.range([0, width]);
-		this.scaleY = d3.scale.linear()
+		this.scaleY = d3.scaleLinear()
 			.domain([this.camera.bottom + this.camera.position.y, this.camera.top + this.camera.position.y])
 			.range([height, 0]);
-		
-		this.xAxis = d3.svg.axis()
-			.scale(this.scaleX)
-			.orient("bottom")
-			.innerTickSize(-height)
-			.outerTickSize(1)
+
+
+		this.xAxis = d3.axisBottom(this.scaleX)
+			.tickSizeInner(-height)
+			.tickSizeOuter(1)
 			.tickPadding(10)
 			.ticks(width / 50);
 			
-		this.yAxis = d3.svg.axis()
-			.scale(this.scaleY)
-			.orient("left")
-			.innerTickSize(-width)
-			.outerTickSize(1)
+		this.yAxis = d3.axisLeft(this.scaleY)
+			.tickSizeInner(-width)
+			.tickSizeOuter(1)
 			.tickPadding(10)
 			.ticks(height / 20);
-		
-		this.svg.append("g")
-			.attr("class", "x axis")
-			.attr("transform", `translate(${marginLeft}, ${height})`)
-			.call(this.xAxis);
-			
-		this.svg.append("g")
-			.attr("class", "y axis")
-			.attr("transform", `translate(${marginLeft}, 0)`)
-			.call(this.yAxis);
+
+        this.svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", `translate(${marginLeft}, ${height})`)
+            .call(this.xAxis);
+
+        this.svg.append("g")
+            .attr("class", "y axis")
+            .attr("transform", `translate(${marginLeft}, 0)`)
+            .call(this.yAxis);
 	}
 	
 	setProfile(profile){
@@ -614,17 +611,16 @@ Potree.ProfileWindow = class ProfileWindow extends THREE.EventDispatcher{
 		
 		{ // SVG SCALES
 			let marginLeft = this.renderArea[0].offsetLeft;
-				
-			this.xAxis.scale(this.scaleX)
-				.orient("bottom")
-				.innerTickSize(-height)
-				.outerTickSize(1)
+
+            this.xAxis = d3.axisBottom(this.scaleX)
+				.tickSizeInner(-height)
+				.tickSizeOuter(1)
 				.tickPadding(10)
 				.ticks(width / 50);
-			this.yAxis.scale(this.scaleY)
-				.orient("left")
-				.innerTickSize(-width)
-				.outerTickSize(1)
+
+            this.yAxis = d3.axisLeft(this.scaleY)
+				.tickSizeInner(-width)
+				.tickSizeOuter(1)
 				.tickPadding(10)
 				.ticks(height / 20);
 				
