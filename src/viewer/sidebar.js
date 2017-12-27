@@ -15,6 +15,7 @@ let createToolIcon = function(icon, title, callback){
 };
 
 function initToolbar(){
+	
 
 	// ANGLE
 	let elToolbar = $("#tools");
@@ -527,9 +528,9 @@ function initAnnotationDetails(){
 				}
 			}
 			
-		};
+		}
 		
-		annotationPanel.i18n();
+		// annotationPanel.i18n();
 	};
 	
 	let annotationsChanged = e => {
@@ -1494,7 +1495,7 @@ function initMeasurementDetails(){
 			this.measurement.addEventListener("marker_removed", this._update);
 			this.measurement.addEventListener("marker_moved", this._update);
 			
-			this.elContent.i18n();
+			//this.elContent.i18n();
 			
 			this.update();
 		}
@@ -2445,7 +2446,7 @@ function initSceneList(){
 			$("#optMaterial" + i).val(viewer.toMaterialName(pcMaterial.pointColorType)).selectmenu("refresh");
 		});
 
-		scenePanel.i18n();
+		//scenePanel.i18n();
 	};	
 	
 	let buildSceneList = () => {

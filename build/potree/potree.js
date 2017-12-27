@@ -15105,8 +15105,9 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 			
 			this.mapView = new Potree.MapView(this);
 			this.mapView.init();
-			
-			i18n.init({ 
+
+			/*
+			i18n.init({
 				lng: 'en',
 				resGetPath: Potree.resourcePath + '/lang/__lng__/__ns__.json',
 				preload: ['en', 'fr', 'de', 'jp'],
@@ -15116,6 +15117,7 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 				// Start translation once everything is loaded
 				$("body").i18n();
 			});
+			*/
 			
 			$(function() {
 				initSidebar();
@@ -15149,8 +15151,8 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 	}
     
     setLanguage(lang){
-        i18n.setLng(lang);
-        $("body").i18n();
+        // i18n.setLng(lang);
+        // $("body").i18n();
     }
 	
 	setServer(server){
@@ -17750,9 +17752,9 @@ function initAnnotationDetails(){
 				}
 			}
 			
-		};
+		}
 		
-		annotationPanel.i18n();
+		// annotationPanel.i18n();
 	};
 	
 	let annotationsChanged = e => {
@@ -18717,7 +18719,7 @@ function initMeasurementDetails(){
 			this.measurement.addEventListener("marker_removed", this._update);
 			this.measurement.addEventListener("marker_moved", this._update);
 			
-			this.elContent.i18n();
+			// this.elContent.i18n();
 			
 			this.update();
 		}
@@ -19668,7 +19670,7 @@ function initSceneList(){
 			$("#optMaterial" + i).val(viewer.toMaterialName(pcMaterial.pointColorType)).selectmenu("refresh");
 		});
 
-		scenePanel.i18n();
+		// scenePanel.i18n();
 	};	
 	
 	let buildSceneList = () => {
