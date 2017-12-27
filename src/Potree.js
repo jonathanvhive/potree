@@ -1,6 +1,5 @@
 
 
-
 window.Potree = function(){
 
 };

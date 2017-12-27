@@ -1,4 +1,4 @@
-;(function(window, document, $, undefined) {
+;(function(window, document, undefined) {
 window.Potree = function(){
 
 };
@@ -14301,28 +14301,37 @@ Potree.Scene = class extends THREE.EventDispatcher{
 
 Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 
-	
-	constructor(domElement, args){
-		super();
-		
-		
-		{ // generate missing dom hierarchy
-			if($(domElement).find("#potree_map").length === 0){
-				let potreeMap = $(`
-					<div id="potree_map" class="mapBox" style="position: absolute; left: 50px; top: 50px; width: 400px; height: 400px; display: none">
+
+    constructor(domElement, args) {
+        super();
+
+        // // generate missing dom hierarchy
+        // if ($(domElement).find("#potree_map").length === 0) {
+        //     let potreeMap = $(`
+			// 		<div id="potree_map" class="mapBox" style="position: absolute; left: 50px; top: 50px; width: 400px; height: 400px; display: none">
+			// 			<div id="potree_map_header" style="position: absolute; width: 100%; height: 25px; top: 0px; background-color: rgba(0,0,0,0.5); z-index: 1000; border-top-left-radius: 3px; border-top-right-radius: 3px;">
+			// 			</div>
+			// 			<div id="potree_map_content" class="map" style="position: absolute; z-index: 100; top: 25px; width: 100%; height: calc(100% - 25px); border: 2px solid rgba(0,0,0,0.5); box-sizing: border-box;"></div>
+			// 		</div>
+			// 	`);
+        //     $(domElement).append(potreeMap);
+        // }
+
+        const potreeMap = `
+       			 <div id="potree_map" class="mapBox" style="position: absolute; left: 50px; top: 50px; width: 400px; height: 400px; display: none">
 						<div id="potree_map_header" style="position: absolute; width: 100%; height: 25px; top: 0px; background-color: rgba(0,0,0,0.5); z-index: 1000; border-top-left-radius: 3px; border-top-right-radius: 3px;">
 						</div>
 						<div id="potree_map_content" class="map" style="position: absolute; z-index: 100; top: 25px; width: 100%; height: calc(100% - 25px); border: 2px solid rgba(0,0,0,0.5); box-sizing: border-box;"></div>
 					</div>
-				`);
-				$(domElement).append(potreeMap);
-			}
-			
-			if($(domElement).find("#potree_description").length === 0){
-				let potreeDescription = $(`<div id="potree_description" class="potree_info_text"></div>`);
-				$(domElement).append(potreeDescription);
-			}
-		}
+        `;
+
+        domElement.innerHTML = potreeMap;
+
+        // if ($(domElement).find("#potree_description").length === 0) {
+        //     let potreeDescription = $(`<div id="potree_description" class="potree_info_text"></div>`);
+        //     $(domElement).append(potreeDescription);
+        //
+        // }
 		
 		
 		let a = args || {};
@@ -14554,8 +14563,8 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 	}
 	
 	setDescription(value){
-		$('#potree_description')[0].innerHTML = value;
-	};
+		// $('#potree_description')[0].innerHTML = value;
+	}
 	
 	setNavigationMode(value){
 		this.scene.view.navigationMode = value;
@@ -16139,8 +16148,6 @@ Potree.ProfileWindow = class ProfileWindow extends THREE.EventDispatcher{
             .attr("class", "y axis")
             .attr("transform", `translate(${marginLeft}, 0)`)
             .call(this.yAxis);
-		
-
 	}
 	
 	setProfile(profile){
@@ -17108,51 +17115,65 @@ Potree.MapView = class{
 		
 
 		let url = pointcloud.pcoGeometry.url + "/../sources.json";
-		$.getJSON(url, (data) => {
-			let sources = data.sources;
-			
-			for(var i = 0; i < sources.length; i++){
-				let source = sources[i];
-				let name = source.name;
-				let points = source.points;
-				let bounds = source.bounds;
 
-				let mapBounds = {
-					min: this.toMap.forward( [bounds.min[0], bounds.min[1]] ),
-					max: this.toMap.forward( [bounds.max[0], bounds.max[1]] )
-				}
-				let mapCenter = [
-					(mapBounds.min[0] + mapBounds.max[0]) / 2,
-					(mapBounds.min[1] + mapBounds.max[1]) / 2,
-				];
-				
-				let p1 = this.toMap.forward( [bounds.min[0], bounds.min[1]] );
-				let p2 = this.toMap.forward( [bounds.max[0], bounds.min[1]] );
-				let p3 = this.toMap.forward( [bounds.max[0], bounds.max[1]] );
-				let p4 = this.toMap.forward( [bounds.min[0], bounds.max[1]] );
-				
-				let boxes = [];
-				//var feature = new ol.Feature({
-				//	'geometry': new ol.geom.LineString([p1, p2, p3, p4, p1])
-				//});
-				let feature = new ol.Feature({
-					'geometry': new ol.geom.Polygon([[p1, p2, p3, p4, p1]])
-				});
-				feature.source = source;
-				feature.pointcloud = pointcloud;
-				this.getSourcesLayer().getSource().addFeature(feature);
-				
-                
-				feature = new ol.Feature({
-					 geometry: new ol.geom.Point(mapCenter),
-					 name: name 
-				});
-				feature.setStyle(this.createLabelStyle(name));
-				this.sourcesLabelLayer.getSource().addFeature(feature);
+		console.log ('ergwerg');
+
+		fetch(url , {
+			method: 'GET',
+            mode: 'cors',
+            cache: 'default'
+		}).then( (data) => {
+			let sources;
+			try {
+				sources = JSON.parse(data).sources;
+			} catch(err){
+				console.log ('Potree error ' , err);
 			}
+
+            for(var i = 0; i < sources.length; i++) {
+                let source = sources[i];
+                let name = source.name;
+                let points = source.points;
+                let bounds = source.bounds;
+
+                let mapBounds = {
+                    min: this.toMap.forward([bounds.min[0], bounds.min[1]]),
+                    max: this.toMap.forward([bounds.max[0], bounds.max[1]])
+                }
+                let mapCenter = [
+                    (mapBounds.min[0] + mapBounds.max[0]) / 2,
+                    (mapBounds.min[1] + mapBounds.max[1]) / 2,
+                ];
+
+                let p1 = this.toMap.forward([bounds.min[0], bounds.min[1]]);
+                let p2 = this.toMap.forward([bounds.max[0], bounds.min[1]]);
+                let p3 = this.toMap.forward([bounds.max[0], bounds.max[1]]);
+                let p4 = this.toMap.forward([bounds.min[0], bounds.max[1]]);
+
+                let boxes = [];
+                //var feature = new ol.Feature({
+                //	'geometry': new ol.geom.LineString([p1, p2, p3, p4, p1])
+                //});
+                let feature = new ol.Feature({
+                    'geometry': new ol.geom.Polygon([[p1, p2, p3, p4, p1]])
+                });
+                feature.source = source;
+                feature.pointcloud = pointcloud;
+                this.getSourcesLayer().getSource().addFeature(feature);
+
+
+                feature = new ol.Feature({
+                    geometry: new ol.geom.Point(mapCenter),
+                    name: name
+                });
+                feature.setStyle(this.createLabelStyle(name));
+                this.sourcesLabelLayer.getSource().addFeature(feature);
+            }
+
 		});
-		
+
 	}
+
 	
 	toggle(){
 		
@@ -17216,6 +17237,8 @@ Potree.MapView = class{
 	}
 	
 };
+
+
 
 
 
@@ -19957,4 +19980,4 @@ Potree.GLProgram = class GLProgram{
 	}
 	
 };
-}(window, document, jQuery));
+}(window, document));

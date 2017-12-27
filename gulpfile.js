@@ -150,8 +150,8 @@ gulp.task("scripts", ['workers','shaders'], function(){
 		.pipe(size({showFiles: true}))
 		.pipe(iife({
 			useStrict: false,
-            params: ["window", "document", "$", "undefined"],
-            args: ["window", "document", "jQuery"]
+            params: ["window", "document", "undefined"],
+            args: ["window", "document"]
 		}))
 		.pipe(gulp.dest('build/potree'));
 

@@ -609,50 +609,60 @@ Potree.MapView = class{
 		
 
 		let url = pointcloud.pcoGeometry.url + "/../sources.json";
-		$.getJSON(url, (data) => {
-			let sources = data.sources;
-			
-			for(var i = 0; i < sources.length; i++){
-				let source = sources[i];
-				let name = source.name;
-				let points = source.points;
-				let bounds = source.bounds;
 
-				let mapBounds = {
-					min: this.toMap.forward( [bounds.min[0], bounds.min[1]] ),
-					max: this.toMap.forward( [bounds.max[0], bounds.max[1]] )
-				}
-				let mapCenter = [
-					(mapBounds.min[0] + mapBounds.max[0]) / 2,
-					(mapBounds.min[1] + mapBounds.max[1]) / 2,
-				];
-				
-				let p1 = this.toMap.forward( [bounds.min[0], bounds.min[1]] );
-				let p2 = this.toMap.forward( [bounds.max[0], bounds.min[1]] );
-				let p3 = this.toMap.forward( [bounds.max[0], bounds.max[1]] );
-				let p4 = this.toMap.forward( [bounds.min[0], bounds.max[1]] );
-				
-				let boxes = [];
-				//var feature = new ol.Feature({
-				//	'geometry': new ol.geom.LineString([p1, p2, p3, p4, p1])
-				//});
-				let feature = new ol.Feature({
-					'geometry': new ol.geom.Polygon([[p1, p2, p3, p4, p1]])
-				});
-				feature.source = source;
-				feature.pointcloud = pointcloud;
-				this.getSourcesLayer().getSource().addFeature(feature);
-				
-                
-				feature = new ol.Feature({
-					 geometry: new ol.geom.Point(mapCenter),
-					 name: name 
-				});
-				feature.setStyle(this.createLabelStyle(name));
-				this.sourcesLabelLayer.getSource().addFeature(feature);
+		fetch(url , {
+			method: 'GET',
+            mode: 'cors',
+            cache: 'default'
+		}).then( (data) => {
+			let sources;
+			try {
+				sources = JSON.parse(data).sources;
+			} catch(err){
+				console.log ('Potree error ' , err);
 			}
+
+            for(var i = 0; i < sources.length; i++) {
+                let source = sources[i];
+                let name = source.name;
+                let points = source.points;
+                let bounds = source.bounds;
+
+                let mapBounds = {
+                    min: this.toMap.forward([bounds.min[0], bounds.min[1]]),
+                    max: this.toMap.forward([bounds.max[0], bounds.max[1]])
+                }
+                let mapCenter = [
+                    (mapBounds.min[0] + mapBounds.max[0]) / 2,
+                    (mapBounds.min[1] + mapBounds.max[1]) / 2,
+                ];
+
+                let p1 = this.toMap.forward([bounds.min[0], bounds.min[1]]);
+                let p2 = this.toMap.forward([bounds.max[0], bounds.min[1]]);
+                let p3 = this.toMap.forward([bounds.max[0], bounds.max[1]]);
+                let p4 = this.toMap.forward([bounds.min[0], bounds.max[1]]);
+
+                let boxes = [];
+                //var feature = new ol.Feature({
+                //	'geometry': new ol.geom.LineString([p1, p2, p3, p4, p1])
+                //});
+                let feature = new ol.Feature({
+                    'geometry': new ol.geom.Polygon([[p1, p2, p3, p4, p1]])
+                });
+                feature.source = source;
+                feature.pointcloud = pointcloud;
+                this.getSourcesLayer().getSource().addFeature(feature);
+
+
+                feature = new ol.Feature({
+                    geometry: new ol.geom.Point(mapCenter),
+                    name: name
+                });
+                feature.setStyle(this.createLabelStyle(name));
+                this.sourcesLabelLayer.getSource().addFeature(feature);
+            }
 		});
-		
+
 	}
 	
 	toggle(){
