@@ -15667,7 +15667,8 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 			if(!this.edlRenderer){
 				this.edlRenderer = new EDLRenderer(this);
 			}
-			this.edlRenderer.render(this.renderer);
+			// make sure there will not be some last render after canceling animation loop
+			!this.cancelAnimation && this.edlRenderer.render(this.renderer);
 		}else{
 			if(!this.potreeRenderer){
 				this.potreeRenderer = new PotreeRenderer(this);
