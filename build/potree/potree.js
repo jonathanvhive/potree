@@ -15790,6 +15790,7 @@ class EDLRenderer{
 	};
 	
 	resize(){
+		const viewer = this.viewer;
 		let width = viewer.scaleFactor * viewer.renderArea.clientWidth;
 		let height = viewer.scaleFactor * viewer.renderArea.clientHeight;
 		let aspect = width / height;
@@ -15810,6 +15811,7 @@ class EDLRenderer{
 	}
 
 	render(){
+		const viewer = this.viewer;
 	
 		this.initEDL();
 		
