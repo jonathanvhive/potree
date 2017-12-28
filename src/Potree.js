@@ -29,6 +29,7 @@ Potree.webgl = {
 	vbos: {}
 };
 
+/*
 Potree.scriptPath = null;
 if(document.currentScript.src){
 		Potree.scriptPath = new URL(document.currentScript.src + "/..").href;
@@ -38,9 +39,22 @@ if(document.currentScript.src){
 }else{
 	console.error("Potree was unable to find its script path using document.currentScript. Is Potree included with a script tag? Does your browser support this function?");
 }
+*/
+
+if (window['__POTREE_DEMO__']) {
+	console.log ('DEMO MODE');
+    Potree.scriptPath = new URL(document.currentScript.src + "/..").href;
+    if (Potree.scriptPath.slice(-1) === '/') {
+        Potree.scriptPath = Potree.scriptPath.slice(0, -1);
+    }
+} else {
+
+    Potree.scriptPath = window.location.origin + "/assets/potree";
+}
 
 Potree.resourcePath = Potree.scriptPath + "/resources";
 
+console.log ('Portree running with resourcePath: ' , Potree.resourcePath );
 
 Potree.timerQueries = {};
 

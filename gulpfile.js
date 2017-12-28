@@ -18,9 +18,9 @@ var server;
 
 var paths = {
 	potree : [
+		"src/Potree.js",
 		"src/stats.min.js",
 		"src/BinaryHeap.js",
-		"src/Potree.js",
 		"src/PointCloudTree.js",
 		"src/WorkerPool.js",
 		"build/shaders/shaders.js",
