@@ -1,7 +1,7 @@
 {
   "name": "potree",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "WebGL point cloud viewer",
   "author": "Markus Schütz",
   "license": "BSD-2-CLAUSE",

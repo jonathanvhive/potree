@@ -1,4 +1,4 @@
-
+// no-ui
 
 window.Potree = function(){
 

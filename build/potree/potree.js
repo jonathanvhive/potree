@@ -144,7 +144,7 @@ BinaryHeap.prototype = {
     }
   }
 };
-
+// no-ui
 
 window.Potree = function(){
 
