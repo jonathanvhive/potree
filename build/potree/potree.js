@@ -12950,25 +12950,40 @@ Potree.PointCloudArena4DNode = class PointCloudArena4DNode extends Potree.PointC
 	
 	constructor(){
 		super();
+
 		this.left = null;
 		this.right = null;
 		this.sceneNode = null;
 		this.kdtree = null;
 	}
 	
-	getNumPoints(){ return this.geometryNode.numPoints; }
+	getNumPoints(){
+		return this.geometryNode.numPoints;
+	}
 	
-	isLoaded(){ return true;}
+	isLoaded(){
+		return true;
+	}
 	
-	isTreeNode(){ return true;	}
+	isTreeNode(){
+		return true;
+	}
 	
-	isGeometryNode(){return false;}
+	isGeometryNode(){
+		return false;
+	}
 	
-	getLevel(){ return this.geometryNode.level;	}
+	getLevel(){
+		return this.geometryNode.level;
+	}
 	
-	getBoundingSphere(){ return this.geometryNode.boundingSphere; }
+	getBoundingSphere(){
+		return this.geometryNode.boundingSphere;
+	}
 	
-	getBoundingBox(){ 	return this.geometryNode.boundingBox;	}
+	getBoundingBox(){
+		return this.geometryNode.boundingBox;
+	}
 	
 	toTreeNode(child){
 		var geometryNode = null;
