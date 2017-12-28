@@ -14470,6 +14470,8 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
     constructor(domElement, args) {
         super();
 
+        this.cancelAnimation = false;
+
         // // generate missing dom hierarchy
         // if ($(domElement).find("#potree_map").length === 0) {
         //     let potreeMap = $(`
@@ -15634,10 +15636,18 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 			"timestamp": timestamp});
 	}
 
+	cancelAnimationLoop(){
+		this.cancelAnimation = true;
+	}
+
 
 	loop(timestamp) {
 		
-		requestAnimationFrame(this.loop.bind(this));
+		let anim = requestAnimationFrame(this.loop.bind(this));
+
+		if (this.cancelAnimation){
+			cancelAnimationFrame(anim);
+		}
 		
 		this.stats.begin();
 		
