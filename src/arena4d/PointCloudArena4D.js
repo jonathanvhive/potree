@@ -2,8 +2,8 @@
 Potree.PointCloudArena4DNode = class PointCloudArena4DNode extends Potree.PointCloudTreeNode{
 	
 	constructor(){
-		super(); 
-		
+		super();
+
 		this.left = null;
 		this.right = null;
 		this.sceneNode = null;
@@ -78,7 +78,7 @@ Potree.PointCloudArena4DNode = class PointCloudArena4DNode extends Potree.PointC
 	}
 };
 
-Potree.PointCloudOctreeNode.prototype = Object.create(Potree.PointCloudTreeNode.prototype);
+// Potree.PointCloudOctreeNode.prototype = Object.create(Potree.PointCloudTreeNode.prototype);
 
 
 

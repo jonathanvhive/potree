@@ -151,7 +151,7 @@ gulp.task("scripts", ['workers','shaders'], function(){
 		.pipe(concat('potree.js'))
 		.pipe(size({showFiles: true}))
 		.pipe(iife({
-			useStrict: false,
+			useStrict: true,
             params: ["window", "document", "undefined"],
             args: ["window", "document"]
 		}))
