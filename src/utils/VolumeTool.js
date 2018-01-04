@@ -50,8 +50,7 @@ Potree.VolumeTool = class VolumeTool extends THREE.EventDispatcher{
 	}
 	
 	startInsertion(args = {}){
-		let domElement = this.viewer.renderer.domElement;
-		
+
 		let volume = new Potree.Volume();
 		volume.clip = args.clip || false;
 		volume.name = args.name || "Volume";
@@ -81,7 +80,7 @@ Potree.VolumeTool = class VolumeTool extends THREE.EventDispatcher{
 				volume.position.copy(I.location);
 				
 				var wp = volume.getWorldPosition().applyMatrix4(camera.matrixWorldInverse);
-				var pp = new THREE.Vector4(wp.x, wp.y, wp.z).applyMatrix4(camera.projectionMatrix);
+				// var pp = new THREE.Vector4(wp.x, wp.y, wp.z).applyMatrix4(camera.projectionMatrix);
 				var w = Math.abs((wp.z  / 10)); 
 				volume.scale.set(w,w,w);
 			}

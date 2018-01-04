@@ -27,8 +27,9 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		this.angleLabels = [];
 		this.coordinateLabels = [];
 		
-		this.heightEdge;
-		this.heightLabel;
+		this.heightEdge = undefined;
+		this.heightLabel = undefined;
+
 		{ // height stuff
 			
 			{ // height line
@@ -56,7 +57,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 				this.heightLabel.setTextColor({r:180, g:220, b:180, a:1.0});
 				this.heightLabel.material.depthTest = false;
 				this.heightLabel.material.opacity = 1;
-				this.heightLabel.visible = false;;
+				this.heightLabel.visible = false;
 				this.add(this.heightLabel);
 			}
 		}
@@ -83,7 +84,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		);
 		
 		return sphereMaterial;
-	};
+	}
 	
 	addMarker(point){
 		if(point instanceof THREE.Vector3){
@@ -170,6 +171,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 			let drop = e => {
 				let i = this.spheres.indexOf(e.drag.object);
 				if(i !== -1){
+					//console.log ('marker_dropped ' , this);
 					this.dispatchEvent({
 						"type": "marker_dropped",
 						"measurement": this,
@@ -195,7 +197,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		this.dispatchEvent(event);
 		
 		this.setMarker(this.points.length-1, point);
-	};
+	}
 	
 	removeMarker(index){
 		this.points.splice(index, 1);
@@ -215,7 +217,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		this.update();
 		
 		this.dispatchEvent({type: "marker_removed", measurement: this});
-	};
+	}
 	
 	setMarker(index, point){
 		this.points[index] = point;
@@ -244,7 +246,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		this.dispatchEvent(event);
 		
 		this.update();
-	};
+	}
 	
 	getArea(){
 		let area = 0;
@@ -258,7 +260,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		}
 		
 		return Math.abs(area / 2);
-	};
+	}
 	
 	getTotalDistance(){
 		
@@ -291,7 +293,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
         let v1 = new THREE.Vector3().subVectors(point1.position, cornerPoint.position);
         let v2 = new THREE.Vector3().subVectors(point2.position, cornerPoint.position);
         return v1.angleTo(v2);
-    };
+    }
 	
 	getAngle(index){
 	
@@ -304,7 +306,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		let next = this.points[(index + 1) % (this.points.length)];
 		
 		return this.getAngleBetweenLines(point, previous, next);
-	};
+	}
 	
 	update(){
 	
@@ -321,10 +323,10 @@ Potree.Measure = class Measure extends THREE.Object3D{
 				let labelPos = position.clone().add(new THREE.Vector3(0,1,0));
 				coordinateLabel.position.copy(labelPos);
 				
-				/*let msg = Potree.utils.addCommas(position.x.toFixed(2)) 
-					+ " / " + Potree.utils.addCommas(position.y.toFixed(2)) 
-					+ " / " + Potree.utils.addCommas(position.z.toFixed(2));*/
-				let msg = Potree.utils.addCommas(position.z.toFixed(2) + " " + this.lengthUnit.code);
+				let msg = Potree.utils.addCommas(position.x.toFixed(2)) +
+					" , " + Potree.utils.addCommas(position.y.toFixed(2)) +
+					" , " + Potree.utils.addCommas(position.z.toFixed(2));
+				//let msg = Potree.utils.addCommas(position.z.toFixed(2) + " " + this.lengthUnit.code);
 				coordinateLabel.setText(msg);
 				
 				coordinateLabel.visible = this.showCoordinates;
@@ -488,7 +490,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 			I.distance = raycaster.ray.origin.distanceTo(I.point);
 		}
 		intersects.sort( function ( a, b ) { return a.distance - b.distance;} );
-	};
+	}
 	
 	get showCoordinates(){
 		return this._showCoordinates;

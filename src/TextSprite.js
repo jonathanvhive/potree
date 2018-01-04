@@ -5,8 +5,6 @@
 Potree.TextSprite = function(text){
 
 	THREE.Object3D.call(this);
-	
-	var scope = this;
 
 	var texture = new THREE.Texture();
 	texture.minFilter = THREE.LinearFilter;
@@ -23,9 +21,9 @@ Potree.TextSprite = function(text){
 	
 	//THREE.Sprite.call(this, spriteMaterial);
 	
-	this.borderThickness = 4;
+	this.borderThickness = 0;
 	this.fontface = "Arial";
-	this.fontsize = 28;
+	this.fontsize = 20;
 	this.borderColor = { r:0, g:0, b:0, a:1.0 };
 	this.backgroundColor = { r:255, g:255, b:255, a:1.0 };
 	this.textColor = {r: 255, g: 255, b: 255, a: 1.0};
@@ -74,30 +72,30 @@ Potree.TextSprite.prototype.update = function(){
 	var margin = 5;
 	var spriteWidth = 2*margin + textWidth + 2 * this.borderThickness;
 	var spriteHeight = this.fontsize * 1.4 + 2 * this.borderThickness;
-	
-	var canvas = document.createElement('canvas');
-	var context = canvas.getContext('2d');
+
 	context.canvas.width = spriteWidth;
 	context.canvas.height = spriteHeight;
 	context.font = "Bold " + this.fontsize + "px " + this.fontface;
 	
 	// background color
-	context.fillStyle   = "rgba(" + this.backgroundColor.r + "," + this.backgroundColor.g + ","
-								  + this.backgroundColor.b + "," + this.backgroundColor.a + ")";
+	/*context.fillStyle   = "rgba(" + this.backgroundColor.r + "," + this.backgroundColor.g + ","
+								  + this.backgroundColor.b + "," + this.backgroundColor.a + ")";*/
 	// border color
-	context.strokeStyle = "rgba(" + this.borderColor.r + "," + this.borderColor.g + ","
-								  + this.borderColor.b + "," + this.borderColor.a + ")";
+	/*context.strokeStyle = "rgba(" + this.borderColor.r + "," + this.borderColor.g + ","
+								  + this.borderColor.b + "," + this.borderColor.a + ")";*/
 								  
-	context.lineWidth = this.borderThickness;
+	/*context.lineWidth = this.borderThickness;
 	this.roundRect(context, this.borderThickness/2, this.borderThickness/2, 
-		textWidth + this.borderThickness + 2*margin, this.fontsize * 1.4 + this.borderThickness, 6);						  
+		textWidth + this.borderThickness + 2*margin, this.fontsize * 1.4 + this.borderThickness, 6);	*/
 		
 	// text color
-	context.strokeStyle = "rgba(0, 0, 0, 1.0)";
+	context.strokeStyle = "rgba(0, 0, 0, 1)";
+	context.lineWidth = 5.0;
+
 	context.strokeText( this.text, this.borderThickness + margin, this.fontsize + this.borderThickness);
 	
-	context.fillStyle = "rgba(" + this.textColor.r + "," + this.textColor.g + ","
-								  + this.textColor.b + "," + this.textColor.a + ")";
+	context.fillStyle = "rgba(" + this.textColor.r + "," + this.textColor.g + "," +
+								   this.textColor.b + "," + this.textColor.a + ")";
 	context.fillText( this.text, this.borderThickness + margin, this.fontsize + this.borderThickness);
 	
 								  

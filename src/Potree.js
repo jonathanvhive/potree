@@ -12,7 +12,7 @@ Potree.version = {
 	suffix: "RC"
 };
 
-console.log("Potree " + Potree.version.major + "." + Potree.version.minor + Potree.version.suffix);
+// console.log("Potree " + Potree.version.major + "." + Potree.version.minor + Potree.version.suffix);
 
 Potree.pointBudget = 1*1000*1000;
 

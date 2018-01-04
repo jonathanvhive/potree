@@ -15,7 +15,7 @@ Potree.version = {
 	suffix: "RC"
 };
 
-console.log("Potree " + Potree.version.major + "." + Potree.version.minor + Potree.version.suffix);
+// console.log("Potree " + Potree.version.major + "." + Potree.version.minor + Potree.version.suffix);
 
 Potree.pointBudget = 1*1000*1000;
 
@@ -9536,8 +9536,6 @@ Potree.Features = function(){
 Potree.TextSprite = function(text){
 
 	THREE.Object3D.call(this);
-	
-	var scope = this;
 
 	var texture = new THREE.Texture();
 	texture.minFilter = THREE.LinearFilter;
@@ -9554,9 +9552,9 @@ Potree.TextSprite = function(text){
 	
 	//THREE.Sprite.call(this, spriteMaterial);
 	
-	this.borderThickness = 4;
+	this.borderThickness = 0;
 	this.fontface = "Arial";
-	this.fontsize = 28;
+	this.fontsize = 20;
 	this.borderColor = { r:0, g:0, b:0, a:1.0 };
 	this.backgroundColor = { r:255, g:255, b:255, a:1.0 };
 	this.textColor = {r: 255, g: 255, b: 255, a: 1.0};
@@ -9605,30 +9603,30 @@ Potree.TextSprite.prototype.update = function(){
 	var margin = 5;
 	var spriteWidth = 2*margin + textWidth + 2 * this.borderThickness;
 	var spriteHeight = this.fontsize * 1.4 + 2 * this.borderThickness;
-	
-	var canvas = document.createElement('canvas');
-	var context = canvas.getContext('2d');
+
 	context.canvas.width = spriteWidth;
 	context.canvas.height = spriteHeight;
 	context.font = "Bold " + this.fontsize + "px " + this.fontface;
 	
 	// background color
-	context.fillStyle   = "rgba(" + this.backgroundColor.r + "," + this.backgroundColor.g + ","
-								  + this.backgroundColor.b + "," + this.backgroundColor.a + ")";
+	/*context.fillStyle   = "rgba(" + this.backgroundColor.r + "," + this.backgroundColor.g + ","
+								  + this.backgroundColor.b + "," + this.backgroundColor.a + ")";*/
 	// border color
-	context.strokeStyle = "rgba(" + this.borderColor.r + "," + this.borderColor.g + ","
-								  + this.borderColor.b + "," + this.borderColor.a + ")";
+	/*context.strokeStyle = "rgba(" + this.borderColor.r + "," + this.borderColor.g + ","
+								  + this.borderColor.b + "," + this.borderColor.a + ")";*/
 								  
-	context.lineWidth = this.borderThickness;
+	/*context.lineWidth = this.borderThickness;
 	this.roundRect(context, this.borderThickness/2, this.borderThickness/2, 
-		textWidth + this.borderThickness + 2*margin, this.fontsize * 1.4 + this.borderThickness, 6);						  
+		textWidth + this.borderThickness + 2*margin, this.fontsize * 1.4 + this.borderThickness, 6);	*/
 		
 	// text color
-	context.strokeStyle = "rgba(0, 0, 0, 1.0)";
+	context.strokeStyle = "rgba(0, 0, 0, 1)";
+	context.lineWidth = 5.0;
+
 	context.strokeText( this.text, this.borderThickness + margin, this.fontsize + this.borderThickness);
 	
-	context.fillStyle = "rgba(" + this.textColor.r + "," + this.textColor.g + ","
-								  + this.textColor.b + "," + this.textColor.a + ")";
+	context.fillStyle = "rgba(" + this.textColor.r + "," + this.textColor.g + "," +
+								   this.textColor.b + "," + this.textColor.a + ")";
 	context.fillText( this.text, this.borderThickness + margin, this.fontsize + this.borderThickness);
 	
 								  
@@ -9813,8 +9811,9 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		this.angleLabels = [];
 		this.coordinateLabels = [];
 		
-		this.heightEdge;
-		this.heightLabel;
+		this.heightEdge = undefined;
+		this.heightLabel = undefined;
+
 		{ // height stuff
 			
 			{ // height line
@@ -9842,7 +9841,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 				this.heightLabel.setTextColor({r:180, g:220, b:180, a:1.0});
 				this.heightLabel.material.depthTest = false;
 				this.heightLabel.material.opacity = 1;
-				this.heightLabel.visible = false;;
+				this.heightLabel.visible = false;
 				this.add(this.heightLabel);
 			}
 		}
@@ -9869,7 +9868,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		);
 		
 		return sphereMaterial;
-	};
+	}
 	
 	addMarker(point){
 		if(point instanceof THREE.Vector3){
@@ -9956,6 +9955,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 			let drop = e => {
 				let i = this.spheres.indexOf(e.drag.object);
 				if(i !== -1){
+					//console.log ('marker_dropped ' , this);
 					this.dispatchEvent({
 						"type": "marker_dropped",
 						"measurement": this,
@@ -9981,7 +9981,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		this.dispatchEvent(event);
 		
 		this.setMarker(this.points.length-1, point);
-	};
+	}
 	
 	removeMarker(index){
 		this.points.splice(index, 1);
@@ -10001,7 +10001,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		this.update();
 		
 		this.dispatchEvent({type: "marker_removed", measurement: this});
-	};
+	}
 	
 	setMarker(index, point){
 		this.points[index] = point;
@@ -10030,7 +10030,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		this.dispatchEvent(event);
 		
 		this.update();
-	};
+	}
 	
 	getArea(){
 		let area = 0;
@@ -10044,7 +10044,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		}
 		
 		return Math.abs(area / 2);
-	};
+	}
 	
 	getTotalDistance(){
 		
@@ -10077,7 +10077,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
         let v1 = new THREE.Vector3().subVectors(point1.position, cornerPoint.position);
         let v2 = new THREE.Vector3().subVectors(point2.position, cornerPoint.position);
         return v1.angleTo(v2);
-    };
+    }
 	
 	getAngle(index){
 	
@@ -10090,7 +10090,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		let next = this.points[(index + 1) % (this.points.length)];
 		
 		return this.getAngleBetweenLines(point, previous, next);
-	};
+	}
 	
 	update(){
 	
@@ -10107,10 +10107,10 @@ Potree.Measure = class Measure extends THREE.Object3D{
 				let labelPos = position.clone().add(new THREE.Vector3(0,1,0));
 				coordinateLabel.position.copy(labelPos);
 				
-				/*let msg = Potree.utils.addCommas(position.x.toFixed(2)) 
-					+ " / " + Potree.utils.addCommas(position.y.toFixed(2)) 
-					+ " / " + Potree.utils.addCommas(position.z.toFixed(2));*/
-				let msg = Potree.utils.addCommas(position.z.toFixed(2) + " " + this.lengthUnit.code);
+				let msg = Potree.utils.addCommas(position.x.toFixed(2)) +
+					" , " + Potree.utils.addCommas(position.y.toFixed(2)) +
+					" , " + Potree.utils.addCommas(position.z.toFixed(2));
+				//let msg = Potree.utils.addCommas(position.z.toFixed(2) + " " + this.lengthUnit.code);
 				coordinateLabel.setText(msg);
 				
 				coordinateLabel.visible = this.showCoordinates;
@@ -10274,7 +10274,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 			I.distance = raycaster.ray.origin.distanceTo(I.point);
 		}
 		intersects.sort( function ( a, b ) { return a.distance - b.distance;} );
-	};
+	}
 	
 	get showCoordinates(){
 		return this._showCoordinates;
@@ -11822,8 +11822,7 @@ Potree.VolumeTool = class VolumeTool extends THREE.EventDispatcher{
 	}
 	
 	startInsertion(args = {}){
-		let domElement = this.viewer.renderer.domElement;
-		
+
 		let volume = new Potree.Volume();
 		volume.clip = args.clip || false;
 		volume.name = args.name || "Volume";
@@ -11853,7 +11852,7 @@ Potree.VolumeTool = class VolumeTool extends THREE.EventDispatcher{
 				volume.position.copy(I.location);
 				
 				var wp = volume.getWorldPosition().applyMatrix4(camera.matrixWorldInverse);
-				var pp = new THREE.Vector4(wp.x, wp.y, wp.z).applyMatrix4(camera.projectionMatrix);
+				// var pp = new THREE.Vector4(wp.x, wp.y, wp.z).applyMatrix4(camera.projectionMatrix);
 				var w = Math.abs((wp.z  / 10)); 
 				volume.scale.set(w,w,w);
 			}
