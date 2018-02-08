@@ -147,10 +147,43 @@
 
         // Sigeom
         Potree.loadPointCloud("../pointclouds/vol_total/cloud.js", "sigeom.sa", function (e) {
-            let scene = viewer.scene;
+            let  scene = viewer.scene;
             scene.addPointCloud(e.pointcloud);
 
             //***************
+
+            function getMousePos(canvas, evt) {
+                var rect = canvas.getBoundingClientRect();
+                return {
+                    x: evt.clientX - rect.left,
+                    y: evt.clientY - rect.top
+                };
+            }
+
+            function useMouseCooods(ev){
+
+                var mousePos = getMousePos(el, ev);
+
+                let i = Potree.utils.getMousePointCloudIntersection(
+                    mousePos,
+                    scene.camera,
+                    viewer.renderer,
+                    scene.pointclouds);
+
+                if (!i) return;
+
+                console.log ('+ ' , i.location);
+            }
+
+
+            el.addEventListener('mousemove' , useMouseCooods);
+
+            window.setTimeout(()=>{
+                console.log ('REMOVE NOW');
+                el.removeEventListener('mousemove' , useMouseCooods);
+            },3000);
+
+
 
 
             function markerDroppedHandler(ev) {
