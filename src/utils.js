@@ -108,7 +108,7 @@ Potree.utils = class{
 		 let worker = new Worker(URL.createObjectURL(blob));
 		 
 		 return worker;
-	};
+	}
 
 	static loadSkybox(path){
 		let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100000 );
@@ -171,7 +171,7 @@ Potree.utils = class{
 		scene.rotation.x = Math.PI / 2;
 		
 		return {"camera": camera, "scene": scene};
-	};
+	}
 
 	static createGrid(width, length, spacing, color){
 		let material = new THREE.LineBasicMaterial({
@@ -192,14 +192,14 @@ Potree.utils = class{
 		let line = new THREE.LineSegments(geometry, material, THREE.LinePieces);
 		line.receiveShadow = true;
 		return line;
-	};
+	}
 
 
 	static createBackgroundTexture(width, height){
 
 		function gauss(x, y){
 			return (1 / (2 * Math.PI)) * Math.exp( - (x*x + y*y) / 2);
-		};
+		}
 
 		//map.magFilter = THREE.NearestFilter;
 		let size = width * height;
@@ -231,7 +231,7 @@ Potree.utils = class{
 		texture.needsUpdate = true;
 		
 		return texture;
-	};
+	}
 
 	static getMousePointCloudIntersection(mouse, camera, renderer, pointclouds){
 		let nmouse =  {
@@ -281,7 +281,7 @@ Potree.utils = class{
 		}else{
 			return null;
 		}
-	};	
+	}
 		
 	static pixelsArrayToImage(pixels, width, height){
 		let canvas = document.createElement('canvas');

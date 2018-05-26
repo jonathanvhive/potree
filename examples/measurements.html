@@ -90,6 +90,7 @@
     <h1>
         <button class="stop-btn">Stop</button>
         <button class="point">Point</button>
+        <button class="change-units-btn">Change units</button>
     </h1>
     <div class="potree_container">
         <div id="potree_render_area"></div>
@@ -101,6 +102,8 @@
 <!-- //////////////////////////// -->
 <script>
 
+    let _units = ['ft' , 'm' ];
+
     window.addEventListener('load', function(){
 
         const viewer = startPotree();
@@ -110,6 +113,18 @@
                 console.log ('STOP');
                 viewer.cancelAnimationLoop();
             });
+
+
+
+
+        document.querySelectorAll('.change-units-btn')[0]
+            .addEventListener('click' , () => {
+                _units.unshift(_units.pop());
+                console.log ('change_units' , _units);
+                viewer.setLengthUnit(_units[0]);
+            });
+
+
 
 
 

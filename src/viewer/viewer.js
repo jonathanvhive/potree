@@ -1783,7 +1783,7 @@ class EDLRenderer{
 		
 		
 		viewer.renderer.render(viewer.scene.scene, viewer.scene.camera);
-		
+
 		viewer.renderer.clearTarget( this.rtColor, true, true, true );
 		
 		let width = viewer.renderArea.clientWidth;
@@ -1836,7 +1836,7 @@ class EDLRenderer{
 		viewer.renderer.render(viewer.controls.sceneControls, viewer.scene.camera);
 		
 		viewer.renderer.render(viewer.measuringTool.sceneMeasurement, viewer.scene.camera);
-		viewer.renderer.render(viewer.profileTool.sceneProfile, viewer.scene.camera);
+		// viewer.renderer.render(viewer.profileTool.sceneProfile, viewer.scene.camera);
 		viewer.renderer.render(viewer.transformationTool.sceneTransform, viewer.scene.camera);
 
 	}
