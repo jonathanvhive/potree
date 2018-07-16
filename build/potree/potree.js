@@ -9114,7 +9114,7 @@ Potree.utils = class{
 		 let worker = new Worker(URL.createObjectURL(blob));
 		 
 		 return worker;
-	};
+	}
 
 	static loadSkybox(path){
 		let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 100000 );
@@ -9177,7 +9177,7 @@ Potree.utils = class{
 		scene.rotation.x = Math.PI / 2;
 		
 		return {"camera": camera, "scene": scene};
-	};
+	}
 
 	static createGrid(width, length, spacing, color){
 		let material = new THREE.LineBasicMaterial({
@@ -9198,14 +9198,14 @@ Potree.utils = class{
 		let line = new THREE.LineSegments(geometry, material, THREE.LinePieces);
 		line.receiveShadow = true;
 		return line;
-	};
+	}
 
 
 	static createBackgroundTexture(width, height){
 
 		function gauss(x, y){
 			return (1 / (2 * Math.PI)) * Math.exp( - (x*x + y*y) / 2);
-		};
+		}
 
 		//map.magFilter = THREE.NearestFilter;
 		let size = width * height;
@@ -9237,7 +9237,7 @@ Potree.utils = class{
 		texture.needsUpdate = true;
 		
 		return texture;
-	};
+	}
 
 	static getMousePointCloudIntersection(mouse, camera, renderer, pointclouds){
 		let nmouse =  {
@@ -9287,7 +9287,7 @@ Potree.utils = class{
 		}else{
 			return null;
 		}
-	};	
+	}
 		
 	static pixelsArrayToImage(pixels, width, height){
 		let canvas = document.createElement('canvas');
@@ -9892,7 +9892,7 @@ Potree.Measure = class Measure extends THREE.Object3D{
 			lineMaterial.depthTest = false;
 			let edge = new THREE.Line(lineGeometry, lineMaterial);
 			edge.visible = true;
-			
+
 			this.add(edge);
 			this.edges.push(edge);
 		}
@@ -10145,14 +10145,14 @@ Potree.Measure = class Measure extends THREE.Object3D{
 
 			{// edges
 				let edge = this.edges[index];
-				
+
 				edge.material.color = this.color;
-				
+
 				edge.position.copy(point.position);
-				
+
 				edge.geometry.vertices[0].set(0, 0, 0);
 				edge.geometry.vertices[1].copy(nextPoint.position).sub(point.position);
-				
+
 				edge.geometry.verticesNeedUpdate = true;
 				edge.geometry.computeBoundingSphere();
 				edge.visible = index < lastIndex || this.closed;
@@ -10165,9 +10165,15 @@ Potree.Measure = class Measure extends THREE.Object3D{
 				center.add(nextPoint.position);
 				center = center.multiplyScalar(0.5);
 				let distance = point.position.distanceTo(nextPoint.position);
+
+				let labelDistance = distance;
+				if (this.lengthUnit.code === 'ft') {
+                    labelDistance *= 3.2808;
+				}
+
 				
 				edgeLabel.position.copy(center);
-				edgeLabel.setText(Potree.utils.addCommas(distance.toFixed(2)) + " " + this.lengthUnit.code);
+				edgeLabel.setText(Potree.utils.addCommas(labelDistance.toFixed(2)) + " " + this.lengthUnit.code);
 				edgeLabel.visible = this.showDistances && (index < lastIndex || this.closed) && this.points.length >= 2 && distance > 0;
 			}
 			
@@ -10239,11 +10245,15 @@ Potree.Measure = class Measure extends THREE.Object3D{
 				
 				//heightEdge.material.dashSize = height / 40;
 				//heightEdge.material.gapSize = height / 40;
-				
-				
-				let heightLabelPosition = start.clone().add(end).multiplyScalar(0.5);
+
+                let labelHeight = height;
+                if (this.lengthUnit.code === 'ft') {
+                    labelHeight *= 3.2808;
+                }
+
+                let heightLabelPosition = start.clone().add(end).multiplyScalar(0.5);
 				this.heightLabel.position.copy(heightLabelPosition);
-				let msg = Potree.utils.addCommas(height.toFixed(2)) + " " + this.lengthUnit.code;
+				let msg = Potree.utils.addCommas(labelHeight.toFixed(2)) + " " + this.lengthUnit.code;
 				this.heightLabel.setText(msg);
 			}
 			
@@ -10252,10 +10262,16 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		{ // update area label
 			this.areaLabel.position.copy(centroid);
 			this.areaLabel.visible = this.showArea && this.points.length >= 3;
-			let msg = Potree.utils.addCommas(this.getArea().toFixed(1)) + " " + this.lengthUnit.code + "\u00B2";
+
+            let labelArea = this.getArea();
+            if (this.lengthUnit.code === 'ft') {
+                labelArea *= 3.2808 * 3.2808;
+            }
+
+			let msg = Potree.utils.addCommas(labelArea.toFixed(1)) + " " + this.lengthUnit.code + "\u00B2";
 			this.areaLabel.setText(msg);
 		}
-	};
+	}
 	
 	raycast(raycaster, intersects){
 		
@@ -10269,10 +10285,10 @@ Potree.Measure = class Measure extends THREE.Object3D{
 		// for scaled objects.
 		// see https://github.com/mrdoob/three.js/issues/5827
 		// TODO: remove this once the bug has been fixed
-		for(let i = 0; i < intersects.length; i++){
-			let I = intersects[i];
-			I.distance = raycaster.ray.origin.distanceTo(I.point);
-		}
+		// for(let i = 0; i < intersects.length; i++){
+		// 	let I = intersects[i];
+		// 	I.distance = raycaster.ray.origin.distanceTo(I.point);
+		// }
 		intersects.sort( function ( a, b ) { return a.distance - b.distance;} );
 	}
 	
@@ -15363,7 +15379,7 @@ class EDLRenderer{
 		
 		
 		viewer.renderer.render(viewer.scene.scene, viewer.scene.camera);
-		
+
 		viewer.renderer.clearTarget( this.rtColor, true, true, true );
 		
 		let width = viewer.renderArea.clientWidth;
@@ -15416,7 +15432,7 @@ class EDLRenderer{
 		viewer.renderer.render(viewer.controls.sceneControls, viewer.scene.camera);
 		
 		viewer.renderer.render(viewer.measuringTool.sceneMeasurement, viewer.scene.camera);
-		viewer.renderer.render(viewer.profileTool.sceneProfile, viewer.scene.camera);
+		// viewer.renderer.render(viewer.profileTool.sceneProfile, viewer.scene.camera);
 		viewer.renderer.render(viewer.transformationTool.sceneTransform, viewer.scene.camera);
 
 	}
