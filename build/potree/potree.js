@@ -15214,9 +15214,6 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 
 
 
-
-
-
 //------------------------------------------------------------------------------------
 // Renderers
 //------------------------------------------------------------------------------------
@@ -15224,10 +15221,15 @@ Potree.Viewer = class PotreeViewer extends THREE.EventDispatcher{
 class PotreeRenderer{
 	
 	constructor(viewer){
+		console.log ('potree patched renderer');
 		this.viewer = viewer;
 	};
 
 	render(){
+
+	    // [foxi]
+		const viewer = this.viewer;
+
 		{// resize
 			let width = viewer.scaleFactor * viewer.renderArea.clientWidth;
 			let height = viewer.scaleFactor * viewer.renderArea.clientHeight;
