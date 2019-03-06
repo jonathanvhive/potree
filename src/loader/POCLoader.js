@@ -23,7 +23,7 @@ Potree.POCLoader.load = function load(url, callback, urlMiddleWare) {
 		pco.url = url;
 		let xhr = new XMLHttpRequest();
 
-		console.log ('(P) loading from Potree.POCLoader.load' , url );
+		// console.log ('(P) loading from Potree.POCLoader.load' , url );
 
 		const _url = urlMiddleWare ? urlMiddleWare(url) : url;
 
@@ -74,14 +74,11 @@ Potree.POCLoader.load = function load(url, callback, urlMiddleWare) {
 				pco.tightBoundingSphere = tightBoundingBox.getBoundingSphere();
 				pco.offset = offset;
 				if(fMno.pointAttributes === "LAS"){
-					console.log ('LASLASLAS');
 					pco.loader = new Potree.LasLazLoader(fMno.version);
 				}else if(fMno.pointAttributes === "LAZ"){
-					console.log ('LAZLAZLAZLAZ');
-
 					pco.loader = new Potree.LasLazLoader(fMno.version);
 				}else{
-					console.log ('(p)  new Potree.BinaryLoader');
+					// console.log ('(p)  new Potree.BinaryLoader');
 
 					pco.loader = new Potree.BinaryLoader(fMno.version, boundingBox, fMno.scale, urlMiddleWare);
 					pco.pointAttributes = new Potree.PointAttributes(pco.pointAttributes);

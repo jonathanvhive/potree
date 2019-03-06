@@ -218,7 +218,7 @@ Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints = function(
 
 		var xhr = new XMLHttpRequest();
 
-		console.log ('(P) Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints (not handled)' , hurl);
+		// console.log ('(P) Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints (not handled)' , hurl);
 
 		xhr.open('GET', hurl, true);
 		xhr.responseType = 'arraybuffer';

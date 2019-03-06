@@ -1,9 +1,7 @@
 ;(function(window, document, undefined) {
 "use strict";
 
-// no-ui -- 1 -- 2
-
-console.log ('(p) -- middleware 1');
+// no-ui -- 1 -- 3
 
 window.Potree = function(){
 
@@ -2075,7 +2073,7 @@ Potree.POCLoader.load = function load(url, callback, urlMiddleWare) {
 		pco.url = url;
 		let xhr = new XMLHttpRequest();
 
-		console.log ('(P) loading from Potree.POCLoader.load' , url );
+		// console.log ('(P) loading from Potree.POCLoader.load' , url );
 
 		const _url = urlMiddleWare ? urlMiddleWare(url) : url;
 
@@ -2126,14 +2124,11 @@ Potree.POCLoader.load = function load(url, callback, urlMiddleWare) {
 				pco.tightBoundingSphere = tightBoundingBox.getBoundingSphere();
 				pco.offset = offset;
 				if(fMno.pointAttributes === "LAS"){
-					console.log ('LASLASLAS');
 					pco.loader = new Potree.LasLazLoader(fMno.version);
 				}else if(fMno.pointAttributes === "LAZ"){
-					console.log ('LAZLAZLAZLAZ');
-
 					pco.loader = new Potree.LasLazLoader(fMno.version);
 				}else{
-					console.log ('(p)  new Potree.BinaryLoader');
+					// console.log ('(p)  new Potree.BinaryLoader');
 
 					pco.loader = new Potree.BinaryLoader(fMno.version, boundingBox, fMno.scale, urlMiddleWare);
 					pco.pointAttributes = new Potree.PointAttributes(pco.pointAttributes);
@@ -2418,7 +2413,7 @@ Potree.BinaryLoader.prototype.load = function(node){
 
 
 	const _url = this.urlMiddleWare ? this.urlMiddleWare(url) : url;
-	console.log ('(p) Potree.BinaryLoader.prototype.load -- calling m/w ' , url , ' SIGNED:' , _url);
+	// console.log ('(p) Potree.BinaryLoader.prototype.load -- calling m/w ' , url , ' SIGNED:' , _url);
 
 
 	xhr.open('GET', _url, true);
@@ -8640,7 +8635,7 @@ Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints = function(
 
 		var xhr = new XMLHttpRequest();
 
-		console.log ('(P) Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints (not handled)' , hurl);
+		// console.log ('(P) Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints (not handled)' , hurl);
 
 		xhr.open('GET', hurl, true);
 		xhr.responseType = 'arraybuffer';
