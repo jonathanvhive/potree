@@ -1,5 +1,7 @@
 // no-ui -- 1 -- 2
 
+console.log ('(p) -- middleware 1');
+
 window.Potree = function(){
 
 };
