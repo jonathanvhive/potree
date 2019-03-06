@@ -155,9 +155,6 @@ Potree.Points = class Points{
 Potree.loadPointCloud = function(path, name, callback, urlMiddleWare){
 
 
-	// urlMiddleWare && urlMiddleWare('ergewr');
-
-
 	const loaded = function(pointcloud){
 		pointcloud.name = name;
 
@@ -184,7 +181,6 @@ Potree.loadPointCloud = function(path, name, callback, urlMiddleWare){
 				callback({type: "loading_failed"});
 			}else{
 				let pointcloud = new Potree.PointCloudOctree(geometry);
-				// pointcloud.urlMiddleWare = urlMiddleWare;
 
 				loaded(pointcloud);
 			}

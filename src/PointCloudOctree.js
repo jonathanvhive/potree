@@ -81,10 +81,6 @@ Potree.PointCloudOctree = class extends Potree.PointCloudTree{
 		this.profileRequests = [];
 		this.name = "";
 
-		// ILAN
-		// this.urlMiddleWare = null;
-
-
 		{
 			let box = [this.pcoGeometry.tightBoundingBox, this.getBoundingBoxWorld()]
 				.find(v => v !== undefined);
