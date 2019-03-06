@@ -1,5 +1,5 @@
 
-Potree.BinaryLoader = function(version, boundingBox, scale){
+Potree.BinaryLoader = function(version, boundingBox, scale, urlMiddleWare){
 	if(typeof(version) === "string"){
 		this.version = new Potree.Version(version);
 	}else{
@@ -8,6 +8,8 @@ Potree.BinaryLoader = function(version, boundingBox, scale){
 
 	this.boundingBox = boundingBox;
 	this.scale = scale;
+
+	this.urlMiddleWare = urlMiddleWare;
 };
 
 Potree.BinaryLoader.prototype.load = function(node){
@@ -24,7 +26,13 @@ Potree.BinaryLoader.prototype.load = function(node){
 	}
 
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', url, true);
+
+
+	const _url = this.urlMiddleWare ? this.urlMiddleWare(url) : url;
+	console.log ('(p) Potree.BinaryLoader.prototype.load -- calling m/w ' , url , ' SIGNED:' , _url);
+
+
+	xhr.open('GET', _url, true);
 	xhr.responseType = 'arraybuffer';
 	xhr.overrideMimeType('text/plain; charset=x-user-defined');
 	xhr.onreadystatechange = function() {
@@ -40,7 +48,7 @@ Potree.BinaryLoader.prototype.load = function(node){
 	try{
 		xhr.send(null);
 	}catch(e){
-		console.log("fehler beim laden der punktwolke: " + e);
+		console.log("Error loading the point cloud: " + e);
 	}
 };
 
@@ -55,7 +63,7 @@ Potree.BinaryLoader.prototype.parse = function(node, buffer){
 
 	let workerPath = Potree.scriptPath + "/workers/BinaryDecoderWorker.js";
 	let worker = Potree.workerPool.getWorker(workerPath);
-	
+
 	worker.onmessage = function(e){
 		let data = e.data;
 		let buffers = data.attributeBuffers;
@@ -99,7 +107,7 @@ Potree.BinaryLoader.prototype.parse = function(node, buffer){
 			let buffer = new Float32Array(numPoints*3);
 			geometry.addAttribute("normal", new THREE.BufferAttribute(new Float32Array(buffer), 3));
 		}
-		
+
 		tightBoundingBox.max.sub(tightBoundingBox.min);
 		tightBoundingBox.min.set(0, 0, 0);
 
