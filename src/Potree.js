@@ -154,6 +154,8 @@ Potree.Points = class Points{
 
 Potree.loadPointCloud = function(path, name, callback, urlMiddleWare){
 
+	Potree._middleWare = urlMiddleWare;
+
 
 	const loaded = function(pointcloud){
 		pointcloud.name = name;
