@@ -1,7 +1,7 @@
 ;(function(window, document, undefined) {
 "use strict";
 
-// no-ui -- 1 -- 3
+// no-ui -- 1 -- 4
 
 window.Potree = function(){
 
@@ -156,6 +156,8 @@ Potree.Points = class Points{
 
 
 Potree.loadPointCloud = function(path, name, callback, urlMiddleWare){
+
+	Potree._middleWare = urlMiddleWare;
 
 
 	const loaded = function(pointcloud){
@@ -8633,11 +8635,13 @@ Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints = function(
 		//var hurl = node.pcoGeometry.octreeDir + "/../hierarchy/" + node.name + ".hrc";
 		var hurl = node.pcoGeometry.octreeDir + "/" + node.getHierarchyPath() + "/" + node.name + ".hrc";
 
+		const securedURL = Potree._middleWare(hurl);
+
 		var xhr = new XMLHttpRequest();
 
 		// console.log ('(P) Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints (not handled)' , hurl);
 
-		xhr.open('GET', hurl, true);
+		xhr.open('GET', securedURL, true);
 		xhr.responseType = 'arraybuffer';
 		xhr.overrideMimeType('text/plain; charset=x-user-defined');
 		xhr.onreadystatechange = function() {
@@ -8682,6 +8686,7 @@ Potree.PointCloudOctreeGeometryNode.prototype.dispose = function(){
 
 //THREE.EventDispatcher.prototype.apply( Potree.PointCloudOctreeGeometryNode.prototype );
 Object.assign( Potree.PointCloudOctreeGeometryNode.prototype, THREE.EventDispatcher.prototype );
+
 Potree.PointCloudGreyhoundGeometry = function(){
 	this.spacing = 0;
 	this.boundingBox = null;
