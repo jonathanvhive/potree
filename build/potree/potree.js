@@ -2074,6 +2074,7 @@ Potree.POCLoader.load = function load(url, callback, urlMiddleWare) {
 		let pco = new Potree.PointCloudOctreeGeometry();
 		pco.url = url;
 		let xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 
 		// console.log ('(P) loading from Potree.POCLoader.load' , url );
 
@@ -2412,6 +2413,7 @@ Potree.BinaryLoader.prototype.load = function(node){
 	}
 
 	let xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
 
 
 	const _url = this.urlMiddleWare ? this.urlMiddleWare(url) : url;
@@ -2544,6 +2546,7 @@ Potree.GreyhoundBinaryLoader.prototype.load = function(node){
 	var url = node.getURL();
 
 	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
 	xhr.open('GET', url, true);
 	xhr.responseType = 'arraybuffer';
 	xhr.overrideMimeType('text/plain; charset=x-user-defined');
@@ -2730,6 +2733,7 @@ class GreyhoundUtils{
 	
 	static fetch(url, cb) {
 		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 		xhr.open('GET', url, true);
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState === 4) {
@@ -2746,6 +2750,7 @@ class GreyhoundUtils{
 
 	static fetchBinary(url, cb) {
 		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 		xhr.open('GET', url, true);
 		xhr.responseType = 'arraybuffer';
 		xhr.onreadystatechange = function() {
@@ -3080,6 +3085,7 @@ Potree.LasLazLoader = class LasLazLoader{
 		let scope = this;
 		
 		let xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 		xhr.open('GET', url, true);
 		xhr.responseType = 'arraybuffer';
 		xhr.overrideMimeType('text/plain; charset=x-user-defined');
@@ -8638,6 +8644,7 @@ Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints = function(
 		const securedURL = Potree._middleWare(hurl);
 
 		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 
 		// console.log ('(P) Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints (not handled)' , hurl);
 
@@ -8981,6 +8988,7 @@ Potree.PointCloudGreyhoundGeometryNode.prototype.loadHierarchyThenPoints =
 		}
 
 		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 		xhr.open('GET', hurl, true);
 
         var that = this;
@@ -9079,6 +9087,7 @@ Potree.utils = class{
 
 	static pathExists(url){
 		let req = new XMLHttpRequest();
+		req.withCredentials = true;
 		req.open('GET', url, false);
 		req.send(null);
 		if (req.status !== 200) {
@@ -13235,6 +13244,7 @@ Potree.PointCloudArena4DGeometryNode.prototype.load = function(){
 	
 	var url = this.pcoGeometry.url + "?node=" + this.number;
 	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
 	xhr.open("GET", url, true);
 	xhr.responseType = "arraybuffer";
 	
@@ -13342,6 +13352,7 @@ Potree.PointCloudArena4DGeometry.prototype = Object.create( THREE.EventDispatche
 Potree.PointCloudArena4DGeometry.load = function(url, callback){
 
 	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
 	xhr.open('GET', url + "?info", true);
 	
 	xhr.onreadystatechange = function(){
@@ -13393,6 +13404,7 @@ Potree.PointCloudArena4DGeometry.load = function(url, callback){
 Potree.PointCloudArena4DGeometry.prototype.loadHierarchy = function(){
 	var url = this.url + "?tree"; 
 	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
 	xhr.open("GET", url, true);
 	xhr.responseType = "arraybuffer";
 	

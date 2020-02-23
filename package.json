@@ -1,6 +1,6 @@
 {
   "name": "potree-vhive",
-  "private": true,
+  "private": false,
   "version": "1.0.1",
   "description": "WebGL point cloud viewer",
   "author": "Markus Schütz",
