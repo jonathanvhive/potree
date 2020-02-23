@@ -39,6 +39,7 @@ Potree.LasLazLoader = class LasLazLoader{
 		let scope = this;
 		
 		let xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 		xhr.open('GET', url, true);
 		xhr.responseType = 'arraybuffer';
 		xhr.overrideMimeType('text/plain; charset=x-user-defined');

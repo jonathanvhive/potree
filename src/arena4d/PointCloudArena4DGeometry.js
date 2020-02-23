@@ -75,6 +75,7 @@ Potree.PointCloudArena4DGeometryNode.prototype.load = function(){
 	
 	var url = this.pcoGeometry.url + "?node=" + this.number;
 	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
 	xhr.open("GET", url, true);
 	xhr.responseType = "arraybuffer";
 	
@@ -183,6 +184,7 @@ Potree.PointCloudArena4DGeometry.load = function(url, callback){
 
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', url + "?info", true);
+	xhr.withCredentials = true;
 	
 	xhr.onreadystatechange = function(){
 		try{
@@ -233,6 +235,7 @@ Potree.PointCloudArena4DGeometry.load = function(url, callback){
 Potree.PointCloudArena4DGeometry.prototype.loadHierarchy = function(){
 	var url = this.url + "?tree"; 
 	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
 	xhr.open("GET", url, true);
 	xhr.responseType = "arraybuffer";
 	

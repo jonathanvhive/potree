@@ -24,6 +24,7 @@ Potree.GreyhoundBinaryLoader.prototype.load = function(node){
 	var url = node.getURL();
 
 	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
 	xhr.open('GET', url, true);
 	xhr.responseType = 'arraybuffer';
 	xhr.overrideMimeType('text/plain; charset=x-user-defined');

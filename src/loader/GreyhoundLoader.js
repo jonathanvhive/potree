@@ -49,6 +49,7 @@ class GreyhoundUtils{
 	
 	static fetch(url, cb) {
 		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 		xhr.open('GET', url, true);
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState === 4) {
@@ -65,6 +66,7 @@ class GreyhoundUtils{
 
 	static fetchBinary(url, cb) {
 		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 		xhr.open('GET', url, true);
 		xhr.responseType = 'arraybuffer';
 		xhr.onreadystatechange = function() {

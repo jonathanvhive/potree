@@ -219,6 +219,7 @@ Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints = function(
 		const securedURL = Potree._middleWare(hurl);
 
 		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 
 		// console.log ('(P) Potree.PointCloudOctreeGeometryNode.prototype.loadHierachyThenPoints (not handled)' , hurl);
 

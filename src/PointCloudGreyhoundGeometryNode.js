@@ -268,7 +268,8 @@ Potree.PointCloudGreyhoundGeometryNode.prototype.loadHierarchyThenPoints =
 			hurl += '&offset=[' + offset.x + ',' + offset.y + ',' + offset.z + ']';
 		}
 
-		var xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
 		xhr.open('GET', hurl, true);
 
         var that = this;

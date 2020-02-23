@@ -22,6 +22,7 @@ Potree.POCLoader.load = function load(url, callback, urlMiddleWare) {
 		let pco = new Potree.PointCloudOctreeGeometry();
 		pco.url = url;
 		let xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
 
 		// console.log ('(P) loading from Potree.POCLoader.load' , url );
 

@@ -26,7 +26,7 @@ Potree.BinaryLoader.prototype.load = function(node){
 	}
 
 	let xhr = new XMLHttpRequest();
-
+	xhr.withCredentials = true;
 
 	const _url = this.urlMiddleWare ? this.urlMiddleWare(url) : url;
 	// console.log ('(p) Potree.BinaryLoader.prototype.load -- calling m/w ' , url , ' SIGNED:' , _url);
